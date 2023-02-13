@@ -1,6 +1,4 @@
 class MembersOnlyArticlesController < ApplicationController
-  before_action :authorize
-
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
@@ -17,10 +15,6 @@ class MembersOnlyArticlesController < ApplicationController
 
   def record_not_found
     render json: { error: "Article not found" }, status: :not_found
-  end
-
-  def authorize
-    return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id
   end
 
 end
